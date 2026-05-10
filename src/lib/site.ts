@@ -1,9 +1,18 @@
+function sanitizeUrl(raw: string | undefined, fallback: string): string {
+  const cleaned = (raw ?? '').trim().split(/\s/)[0]
+  try {
+    return new URL(cleaned).toString().replace(/\/$/, '')
+  } catch {
+    return fallback
+  }
+}
+
 export const siteConfig = {
-  name: process.env.NEXT_PUBLIC_SITE_NAME ?? 'PyPrepHub',
+  name: (process.env.NEXT_PUBLIC_SITE_NAME ?? 'PyPrepHub').trim(),
   description:
-    process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
-    'Python, Data Science, Machine Learning, NumPy, Pandas, SQL & AI interview preparation.',
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pyprephub.com',
+    (process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
+      'Python, Data Science, Machine Learning, NumPy, Pandas, SQL & AI interview preparation.').trim(),
+  url: sanitizeUrl(process.env.NEXT_PUBLIC_SITE_URL, 'https://pyprephub.com'),
   ogImage: '/og-default.png',
   author: {
     name: 'PyPrepHub Editorial',
