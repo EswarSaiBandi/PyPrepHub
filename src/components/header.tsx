@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Menu, Search, X } from 'lucide-react'
@@ -101,11 +102,13 @@ export function Header() {
 
 function LogoMark() {
   return (
-    <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 text-white">
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
-        <path d="M4 6h7a4 4 0 010 8H8v6" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="14.5" cy="9" r="1.2" fill="currentColor" />
-      </svg>
-    </span>
+    <Image
+      src="/logo.png"
+      alt={siteConfig.name}
+      width={32}
+      height={32}
+      priority
+      className="h-8 w-8 rounded-lg"
+    />
   )
 }
