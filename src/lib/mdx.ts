@@ -16,26 +16,32 @@ const prettyCodeOptions: PrettyCodeOptions = {
   defaultLang: 'plaintext',
 }
 
+interface HastNode {
+  type: string
+  tagName?: string
+  value?: string
+  properties?: { id?: string } & Record<string, unknown>
+  children?: HastNode[]
+}
+
 function extractHeadings() {
   return (tree: unknown, file: { data: Record<string, unknown> }) => {
     const headings: Heading[] = []
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    visit(tree as any, 'element', (node: any) => {
-      if (!/^h[2-4]$/.test(node.tagName)) return
-      const level = Number(node.tagName[1])
-      const id = node.properties?.id as string | undefined
-      const text = flattenText(node)
+    visit(tree as never, 'element', (node) => {
+      const n = node as HastNode
+      if (!n.tagName || !/^h[2-4]$/.test(n.tagName)) return
+      const level = Number(n.tagName[1])
+      const id = n.properties?.id
+      const text = flattenText(n)
       if (id && text) headings.push({ id, text, level })
     })
     file.data.headings = headings
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function flattenText(node: any): string {
-  if (node.type === 'text') return node.value as string
+function flattenText(node: HastNode): string {
+  if (node.type === 'text' && typeof node.value === 'string') return node.value
   if (!node.children) return ''
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return node.children.map(flattenText).join('')
 }
 
