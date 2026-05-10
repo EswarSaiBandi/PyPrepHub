@@ -42,18 +42,23 @@ export function AdSlot({
   }, [client, slot])
 
   if (!client) {
-    return (
-      <div
-        aria-hidden
-        className={cn(
-          'flex min-h-[90px] items-center justify-center rounded-lg border border-dashed border-ink-300 bg-ink-50 text-xs text-ink-400 dark:border-ink-700 dark:bg-ink-900',
-          className,
-        )}
-        style={style}
-      >
-        Ad placeholder · set NEXT_PUBLIC_ADSENSE_CLIENT to enable
-      </div>
-    )
+    // No publisher ID set — render nothing in production so visitors see a clean page.
+    // Set NEXT_PUBLIC_ADSENSE_CLIENT in your env vars once AdSense issues your ca-pub-… ID.
+    if (process.env.NODE_ENV === 'development') {
+      return (
+        <div
+          aria-hidden
+          className={cn(
+            'flex min-h-[90px] items-center justify-center rounded-lg border border-dashed border-ink-300 bg-ink-50 text-xs text-ink-400 dark:border-ink-700 dark:bg-ink-900',
+            className,
+          )}
+          style={style}
+        >
+          Ad placeholder · set NEXT_PUBLIC_ADSENSE_CLIENT to enable
+        </div>
+      )
+    }
+    return null
   }
 
   return (
@@ -73,7 +78,12 @@ export function AdSlot({
   )
 }
 
+function adsEnabled(): boolean {
+  return Boolean(siteConfig.adsense.client) || process.env.NODE_ENV === 'development'
+}
+
 export function TopBannerAd() {
+  if (!adsEnabled()) return null
   return (
     <div className="border-b border-ink-200 bg-ink-50 py-2 dark:border-ink-800 dark:bg-ink-900/50">
       <div className="container">
@@ -90,6 +100,7 @@ export function TopBannerAd() {
 }
 
 export function StickySidebarAd() {
+  if (!adsEnabled()) return null
   return (
     <aside className="sticky top-24" aria-label="Sidebar advertising">
       <AdSlot
@@ -102,6 +113,7 @@ export function StickySidebarAd() {
 }
 
 export function InArticleAd() {
+  if (!adsEnabled()) return null
   return (
     <div className="my-8">
       <AdSlot
@@ -115,6 +127,7 @@ export function InArticleAd() {
 }
 
 export function FooterAd() {
+  if (!adsEnabled()) return null
   return (
     <AdSlot
       slot={siteConfig.adsense.slots.footer}
