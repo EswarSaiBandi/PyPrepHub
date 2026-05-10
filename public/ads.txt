@@ -1,0 +1,13 @@
+# AdSense ads.txt — required by Google once your site is serving ads.
+#
+# TODO (post-approval):
+#   1. Replace "0000000000000000" below with your own publisher ID (digits only — drop the "ca-" prefix).
+#      Example: if AdSense gave you "ca-pub-1234567890123456", the line becomes:
+#         google.com, pub-1234567890123456, DIRECT, f08c47fec0942fa0
+#   2. Do NOT change "google.com", "DIRECT", or the TAG ID "f08c47fec0942fa0" — those are fixed.
+#   3. Commit + deploy, then verify at https://your-domain.com/ads.txt (must return HTTP 200).
+#   4. In AdSense → Sites, hit "Request review" if the ads.txt warning banner is showing.
+#
+# If you use additional ad networks (Ezoic, Mediavine, etc.), add one line per network below.
+
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

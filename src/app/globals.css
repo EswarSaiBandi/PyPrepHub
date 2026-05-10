@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: 255 255 255;
+    --fg: 14 16 25;
+    --muted: 96 103 129;
+    --card: 255 255 255;
+    --border: 211 215 224;
+    --accent: 47 140 255;
+  }
+  .dark {
+    --bg: 14 16 25;
+    --fg: 235 237 242;
+    --muted: 173 179 194;
+    --card: 26 29 41;
+    --border: 54 58 73;
+    --accent: 89 173 255;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-white text-ink-900 antialiased dark:bg-ink-950 dark:text-ink-50;
+    font-feature-settings: 'cv11', 'ss01';
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    @apply bg-brand-200 text-ink-950 dark:bg-brand-700 dark:text-white;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-white dark:ring-offset-ink-950;
+  }
+  a {
+    @apply transition-colors;
+  }
+  img,
+  video {
+    @apply max-w-full h-auto;
+  }
+}
+
+@layer components {
+  .link {
+    @apply text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold
+           transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500
+           focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-ink-950
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 text-white hover:bg-brand-700;
+  }
+  .btn-ghost {
+    @apply btn bg-ink-100 text-ink-900 hover:bg-ink-200 dark:bg-ink-800 dark:text-ink-50 dark:hover:bg-ink-700;
+  }
+  .btn-outline {
+    @apply btn border border-ink-200 bg-transparent text-ink-900 hover:bg-ink-50
+           dark:border-ink-700 dark:text-ink-50 dark:hover:bg-ink-900;
+  }
+  .card {
+    @apply rounded-xl border border-ink-200 bg-white shadow-sm transition
+           hover:shadow-md dark:border-ink-800 dark:bg-ink-900;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-ink-200 bg-ink-50 px-2.5 py-1
+           text-xs font-medium text-ink-700 transition hover:bg-ink-100
+           dark:border-ink-800 dark:bg-ink-900 dark:text-ink-200 dark:hover:bg-ink-800;
+  }
+  .heading-anchor {
+    @apply ml-2 text-ink-300 opacity-0 transition-opacity hover:text-brand-600
+           dark:text-ink-600 dark:hover:text-brand-400;
+  }
+  h2:hover > .heading-anchor,
+  h3:hover > .heading-anchor,
+  h4:hover > .heading-anchor {
+    @apply opacity-100;
+  }
+}
+
+@layer utilities {
+  .text-muted {
+    @apply text-ink-500 dark:text-ink-400;
+  }
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(var(--border) / 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--border) / 0.3) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+}
+
+/* rehype-pretty-code */
+figure[data-rehype-pretty-code-figure] {
+  @apply my-6 overflow-hidden rounded-xl border border-ink-200 bg-ink-50 dark:border-ink-800 dark:bg-ink-900;
+}
+figure[data-rehype-pretty-code-figure] figcaption[data-rehype-pretty-code-title] {
+  @apply border-b border-ink-200 bg-ink-100 px-4 py-2 font-mono text-xs text-ink-500
+         dark:border-ink-800 dark:bg-ink-950 dark:text-ink-400;
+}
+figure[data-rehype-pretty-code-figure] pre {
+  @apply m-0 overflow-x-auto p-4 text-sm leading-relaxed;
+}
+code[data-line-numbers] {
+  counter-reset: line;
+}
+code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  @apply mr-4 inline-block w-4 text-right text-ink-400;
+}
+[data-line] {
+  @apply border-l-2 border-transparent px-1;
+}
+[data-highlighted-line] {
+  @apply border-brand-500 bg-brand-500/10;
+}
+mark[data-highlighted-chars] {
+  @apply rounded bg-brand-500/20 px-1 text-inherit;
+}
+html.dark pre > code > span {
+  color: var(--shiki-dark);
+}
+html:not(.dark) pre > code > span {
+  color: var(--shiki-light);
+}

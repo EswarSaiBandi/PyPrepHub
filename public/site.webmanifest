@@ -1,0 +1,13 @@
+{
+  "name": "PyPrepHub",
+  "short_name": "PyPrepHub",
+  "description": "Python, Data Science, ML, SQL & AI interview preparation.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0e1019",
+  "theme_color": "#1870f5",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
